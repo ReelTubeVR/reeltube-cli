@@ -67,7 +67,7 @@ var versionCmd = &cobra.Command{
 
 func main() {
 	rootCmd.PersistentFlags().StringVarP(&apiKey, "api-key", "k", "", "API key for authentication (required unless REELTUBE_API_KEY is set)")
-	rootCmd.PersistentFlags().StringVarP(&baseURL, "base-url", "u", "http://localhost:4000", "Base URL of the API")
+	rootCmd.PersistentFlags().StringVarP(&baseURL, "base-url", "u", "https://api.reel.tube", "Base URL of the API")
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Enable debug mode")
 
 	err := godotenv.Load()
