@@ -63,3 +63,8 @@ __debug_bin
 *.o
 *.a
 *.so
+
+# Ignore locally build binary
+reeltube
+
+dist/
