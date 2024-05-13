@@ -11,9 +11,9 @@ import (
 
 // Define these variables during the build process using -ldflags
 var (
-	Version = "dev" // Default to 'dev' if not set during build
-	Commit  = "none"
-	Date    = "unknown"
+	version = "dev" // Default to 'dev' if not set during build
+	commit  = "none"
+	date    = "unknown"
 )
 
 var apiKey, baseURL string
@@ -38,7 +38,7 @@ var rootCmd = &cobra.Command{
 
 // VersionInfo returns a string containing the version, commit, and build date
 func VersionInfo() string {
-	return "Version: " + Version + ", Commit: " + Commit + ", Build date: " + Date
+	return "Version: " + version + ", Commit: " + commit + ", Build date: " + date
 }
 
 var whoamiCmd = &cobra.Command{
