@@ -75,8 +75,12 @@ func main() {
 		log.Println("No .env file found. Assuming environment variables are set by the system.")
 	}
 
+	uploadCmd.Flags().StringP("file", "f", "", "Path to the file to upload (required)")
+	uploadCmd.Flags().StringP("name", "n", "", "Optional name to override the upload")
+
 	rootCmd.AddCommand(whoamiCmd)
 	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(uploadCmd)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)

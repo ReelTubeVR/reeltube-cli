@@ -153,3 +153,52 @@ func (c *Client) Me() (*MeResponse, error) {
 	}
 	return &data, nil
 }
+
+type MediaUpload struct {
+	ID string `json:"id"`
+}
+
+type CreateMediaUploadResponse struct {
+	UploadID      string      `json:"upload_id"`
+	PartSize      int         `json:"part_size"`
+	NumParts      int         `json:"num_parts"`
+	PresignedURLs []string    `json:"presigned_urls"`
+	MediaUpload   MediaUpload `json:"media_upload"`
+}
+
+func (c *Client) CreateMediaUpload(fileName string, fileSize int) (*CreateMediaUploadResponse, error) {
+	var data CreateMediaUploadResponse
+	body := map[string]interface{}{
+		"filename": fileName,
+		"size":     fileSize,
+	}
+	_, err := c.Post("/api/v0/media_uploads", body, &data)
+	if err != nil {
+		return nil, err
+	}
+	return &data, nil
+}
+
+type CompleteUploadRequest struct {
+	MediaUploadID string `json:"id"`
+	UploadID      string `json:"upload_id"`
+	Parts         []Part `json:"parts"`
+}
+
+type CompleteUploadResponse struct {
+	MediaUpload MediaUpload `json:"media_upload"`
+}
+
+func (c *Client) CompleteMultipartUpload(mediaUploadID, uploadID string, parts []Part) error {
+	var data CreateMediaUploadResponse
+	body := CompleteUploadRequest{
+		MediaUploadID: mediaUploadID,
+		UploadID:      uploadID,
+		Parts:         parts,
+	}
+	_, err := c.Post(fmt.Sprintf("/api/v0/media_uploads/%s/complete", mediaUploadID), body, &data)
+	if err != nil {
+		return err
+	}
+	return nil
+}
